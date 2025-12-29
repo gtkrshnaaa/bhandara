@@ -35,8 +35,10 @@ class StorefrontController extends Controller
             ->withCount(['products' => function($query) {
                 $query->where('is_visible', true);
             }])
-            ->having('products_count', '>', 0)
-            ->get();
+            ->get()
+            ->filter(function($category) {
+                return $category->products_count > 0;
+            });
 
         return view('public.storefront.index', compact('tenant', 'featuredProducts', 'latestProducts', 'categories'));
     }
@@ -63,8 +65,10 @@ class StorefrontController extends Controller
             ->withCount(['products' => function($query) {
                 $query->where('is_visible', true);
             }])
-            ->having('products_count', '>', 0)
-            ->get();
+            ->get()
+            ->filter(function($category) {
+                return $category->products_count > 0;
+            });
 
         return view('public.storefront.category', compact('tenant', 'category', 'products', 'categories'));
     }
