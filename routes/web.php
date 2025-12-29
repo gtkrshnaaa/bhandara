@@ -72,6 +72,13 @@ Route::prefix('merchant')->name('merchant.')->middleware('auth')->group(function
     Route::resource('orders', \App\Http\Controllers\Merchant\OrderController::class)->only(['index', 'show']);
     Route::post('orders/{order}/status', [\App\Http\Controllers\Merchant\OrderController::class, 'updateStatus'])->name('orders.update-status');
     
+    // DOMAIN: Customer Management
+    Route::resource('customers', \App\Http\Controllers\Merchant\CustomerController::class)->only(['index', 'show']);
+    
+    // DOMAIN: Settings
+    Route::get('/settings', [\App\Http\Controllers\Merchant\SettingsController::class, 'index'])->name('settings.index');
+    Route::put('/settings', [\App\Http\Controllers\Merchant\SettingsController::class, 'update'])->name('settings.update');
+    
 });
 
 // GROUP 3: PUBLIC STOREFRONT (Tenant Aware)
