@@ -14,7 +14,7 @@ class ProductController extends Controller
     /**
      * Display a listing of products for current tenant.
      */
-    public function index()
+    public function index(Request $request)
     {
         // Get current user's first tenant (for now)
         $tenant = Auth::user()->tenants()->first();
@@ -24,10 +24,20 @@ class ProductController extends Controller
                 ->with('error', 'You need to create a shop first.');
         }
 
-        $products = Product::where('tenant_id', $tenant->id)
-            ->with('category')
-            ->latest()
-            ->paginate(12);
+        $query = Product::where('tenant_id', $tenant->id)
+            ->with('category');
+        
+        // Search functionality
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('sku', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        
+        $products = $query->latest()->paginate(15)->withQueryString();
 
         return view('merchant.inventory.products.index', compact('products', 'tenant'));
     }
