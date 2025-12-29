@@ -71,79 +71,97 @@ class AppServiceProvider extends ServiceProvider
                     
                     /* The Main Card Container */
                     .fi-simple-main {
-                        background: rgba(255, 255, 255, 0.65) !important;
-                        backdrop-filter: blur(24px) !important;
-                        -webkit-backdrop-filter: blur(24px) !important;
-                        border-radius: 2rem !important; /* Super rounded */
-                        border: 1px solid rgba(255, 255, 255, 0.8) !important;
+                        background: rgba(255, 255, 255, 0.8) !important;
+                        backdrop-filter: blur(20px) !important;
+                        -webkit-backdrop-filter: blur(20px) !important;
+                        border-radius: 1.5rem !important;
+                        border: 1px solid rgba(255, 255, 255, 0.6) !important;
                         box-shadow: 
-                            0 20px 50px -12px rgba(0,0,0,0.03),
-                            0 4px 10px -2px rgba(0,0,0,0.02) !important;
+                            0 10px 40px -10px rgba(0,0,0,0.05),
+                            0 0 0 1px rgba(0,0,0,0.02) !important;
                         padding: 2.5rem !important;
-                        max-width: 480px !important;
+                        max-width: 440px !important;
                     }
                     
                     /* Brand Name / Logo */
                     .fi-logo { 
                         font-weight: 800 !important; 
-                        letter-spacing: -0.03em !important; 
-                        font-size: 2rem !important; 
+                        letter-spacing: -0.02em !important; 
+                        font-size: 2.25rem !important; 
                         color: #0f172a !important; /* Slate-900 */
                         text-align: center;
-                        margin-bottom: 0.5rem;
+                        margin-bottom: 0.25rem;
                     }
 
                     /* Heading "Sign in" */
                     .fi-simple-header-heading {
-                        font-weight: 700 !important;
-                        color: #334155 !important;
+                        font-weight: 500 !important;
+                        color: #64748b !important;
                         text-align: center;
-                        font-size: 1.25rem !important;
+                        font-size: 1.1rem !important;
+                        margin-bottom: 2rem !important;
                     }
 
                     /* Input Fields */
                     .fi-input-wrp {
-                        border-radius: 1rem !important;
-                        background-color: rgba(255,255,255, 0.7) !important;
-                        border: 1px solid #e2e8f0 !important;
+                        border-radius: 0.75rem !important;
+                        background-color: #ffffff !important;
+                        border: 1px solid #cbd5e1 !important;
                         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
                         transition: all 0.2s ease-in-out;
                     }
                     .fi-input-wrp:focus-within {
-                        border-color: #6366f1 !important; /* Indigo-500 */
-                        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
-                        background-color: #ffffff !important;
+                        border-color: #0f172a !important; /* Slate-900 */
+                        box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1) !important;
                     }
                     input.fi-input {
                         font-family: "Outfit", sans-serif !important;
                         font-weight: 500 !important;
                         color: #1e293b !important;
-                        padding-left: 1.25rem !important;
+                        padding-left: 1rem !important;
                     }
 
                     /* Labels */
                     .fi-fo-field-wrp-label {
-                        font-weight: 600 !important;
-                        color: #64748b !important; /* Slate-500 */
-                        font-size: 0.875rem !important;
+                        font-weight: 700 !important;
+                        color: #334155 !important;
+                        font-size: 0.8rem !important;
+                        text-transform: uppercase !important;
+                        letter-spacing: 0.05em !important;
                         margin-bottom: 0.5rem !important;
                     }
 
-                    /* Primary Button (Sign in) */
-                    .fi-btn-primary {
-                        border-radius: 1rem !important;
+                    /* Primary Button (Sign in) - High Specificity */
+                    button.fi-btn-primary, 
+                    .fi-btn.fi-btn-primary,
+                    button[type="submit"] {
+                        border-radius: 0.75rem !important;
                         background-color: #0f172a !important; /* Slate-900 */
-                        color: white !important;
+                        color: #ffffff !important;
                         font-weight: 700 !important;
                         padding: 0.75rem 1.5rem !important;
-                        box-shadow: 0 10px 20px -10px rgba(15, 23, 42, 0.5) !important;
+                        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
                         transition: all 0.2s ease !important;
-                        border: none !important;
+                        border: 1px solid #0f172a !important;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        font-size: 0.875rem !important;
+                        width: 100% !important; /* Full width button */
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
                     }
-                    .fi-btn-primary:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 15px 30px -10px rgba(15, 23, 42, 0.6) !important;
-                        background-color: #000000 !important;
+                    button.fi-btn-primary:hover,
+                    .fi-btn.fi-btn-primary:hover,
+                    button[type="submit"]:hover {
+                        transform: translateY(-1px);
+                        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+                        background-color: #1e293b !important;
+                    }
+                    
+                    /* Hide unnecessary icon in button if present */
+                    .fi-btn-primary .fi-btn-icon {
+                        display: none;
                     }
 
                     /* Footer Links */
@@ -151,10 +169,13 @@ class AppServiceProvider extends ServiceProvider
                         color: #94a3b8 !important; 
                         font-size: 0.8rem !important; 
                         margin-top: 2rem !important;
+                        text-align: center;
                     }
                     .fi-link {
-                         color: #6366f1 !important;
+                         color: #0f172a !important;
                          font-weight: 600 !important;
+                         text-decoration: underline !important;
+                         text-underline-offset: 4px;
                     }
                 </style>
                 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
