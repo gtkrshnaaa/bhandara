@@ -28,7 +28,7 @@ To become the digital foundation where modern commerce flows with order, clarity
 ### **Mission**
 
 1. **Sovereignty:** Give every merchant total control over their data and storefront appearance.
-2. **Simplicity:** specific logic wrapped in a beautiful UI (Filament) to reduce cognitive load.
+2. **Simplicity:** Specific logic wrapped in a beautiful UI to reduce cognitive load.
 3. **Scalability:** Architecture built to handle one shop or one million shops without code restructuring.
 
 ---
@@ -76,7 +76,7 @@ We utilize a **Multi-Tenant Database Strategy** (Single Database, Tenant Column 
 
 ### **Module 1: The Fortress (Authentication & Tenancy)**
 
-* **Filament Multi-Tenancy:** Automatic scoping of all resources based on the active Shop.
+* **Multi-Tenancy:** Automatic scoping of all resources based on the active Shop.
 * **Tenant Registration Flow:** Self-service shop creation.
 * **Profile Management:** Shop Avatar, Banner, and Bio.
 
@@ -118,12 +118,12 @@ This stack is chosen for maximum efficiency, modern standards, and your specific
 * *Why:* Utilizing new Property Hooks and asymmetric visibility for cleaner classes.
 
 
-* **Admin Panel / App Interface:** **Filament v3.2+**.
-* *Why:* The best TALL-stack admin panel. Handles 90% of the heavy lifting (Tables, Forms, Notifications).
+* **Frontend Architecture:** **Laravel Blade Templates + Tailwind Play CDN**.
+* *Why:* Clean monolith architecture with semantic nested tree structure (following LARAVELDEVCONV.md). Blade provides powerful templating with zero build step. Tailwind Play CDN allows instant, dynamic styling based on database values (e.g., Shop Color Hex) without needing a Node.js build step for every tenant. Perfect for a dynamic SaaS.
 
 
-* **Storefront Styling:** **Tailwind Play CDN (Script)**.
-* *Why:* Allows instant, dynamic styling based on database values (e.g., Shop Color Hex) without needing a Node.js build step for every tenant. Perfect for a dynamic SaaS.
+* **Architecture Pattern:** **Monolith dengan Semantic Nested Tree Structure**.
+* *Why:* Following LARAVELDEVCONV.md standards for maximum scalability and predictability. Scope-first, domain-second organization eliminates flat directory chaos.
 
 
 * **Database:** **MariaDB / MySQL**.
