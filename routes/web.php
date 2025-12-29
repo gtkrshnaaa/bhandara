@@ -68,6 +68,10 @@ Route::prefix('merchant')->name('merchant.')->middleware('auth')->group(function
         Route::resource('categories', \App\Http\Controllers\Merchant\Inventory\CategoryController::class)->except(['show', 'create', 'edit']);
     });
     
+    // DOMAIN: Order Management
+    Route::resource('orders', \App\Http\Controllers\Merchant\OrderController::class)->only(['index', 'show']);
+    Route::post('orders/{order}/status', [\App\Http\Controllers\Merchant\OrderController::class, 'updateStatus'])->name('orders.update-status');
+    
 });
 
 // GROUP 3: PUBLIC STOREFRONT (Tenant Aware)
