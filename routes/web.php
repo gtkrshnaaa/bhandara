@@ -41,6 +41,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('tenants', \App\Http\Controllers\Admin\TenantController::class);
     Route::post('tenants/{tenant}/toggle-status', [\App\Http\Controllers\Admin\TenantController::class, 'toggleStatus'])->name('tenants.toggle-status');
     
+    // DOMAIN: User Management
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except(['show']);
+    
     // DOMAIN: Inventory Management
     Route::prefix('inventory')->name('inventory.')->group(function () {
         // Future: Products, Categories resources will be added here
