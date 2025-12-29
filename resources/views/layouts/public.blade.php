@@ -55,7 +55,7 @@
                     <a href="#about" class="text-sm font-semibold text-slate-600 hover:text-brand-600 transition">About</a>
                 </nav>
 
-                <!-- Cart (Coming Soon) -->
+                <!-- Shopping Cart -->
                 @php
                     $cartCount = 0;
                     $cart = session()->get("cart_{$tenant->id}", []);

@@ -68,7 +68,7 @@
                 @endif
             </div>
 
-            <!-- Add to Cart (Coming Soon) -->
+            <!-- Add to Cart Form -->
             <form method="POST" action="{{ route('storefront.cart.add', $tenant->slug) }}">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
