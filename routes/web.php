@@ -62,6 +62,7 @@ Route::prefix('merchant')->name('merchant.')->middleware('auth')->group(function
     // DOMAIN: Inventory Management
     Route::prefix('inventory')->name('inventory.')->group(function () {
         Route::resource('products', \App\Http\Controllers\Merchant\Inventory\ProductController::class);
+        Route::resource('categories', \App\Http\Controllers\Merchant\Inventory\CategoryController::class)->except(['show', 'create', 'edit']);
     });
     
 });
