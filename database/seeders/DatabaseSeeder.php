@@ -2,128 +2,157 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
-use App\Models\Customer;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
-use App\Models\Tenant;
-use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Tenant;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        // 1. Create Super Admin / Merchant
-        $merchant = User::create([
-            'name' => 'Aditya Mahendra',
-            'email' => 'aditya@bhandara.id',
+        // Create Super Admin
+        $admin = User::create([
+            'name' => 'Super Admin',
+            'email' => 'admin@bhandara.id',
             'password' => Hash::make('password'),
+            'email_verified_at' => now(),
         ]);
 
-        // 2. Create Tenant (The Shop)
-        $tenant = Tenant::create([
-            'owner_id' => $merchant->id,
+        // Create Sample Merchants
+        $merchant1 = User::create([
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
+
+        $merchant2 = User::create([
+            'name' => 'Jane Smith',
+            'email' => 'jane@example.com',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
+
+        // Create Sample Tenants (Shops)
+        $tenant1 = Tenant::create([
             'slug' => 'nexus-gear',
-            'name' => 'Nexus Gear Official',
-            'primary_color' => '#6366f1', // Indigo
+            'name' => 'Nexus Gear',
+            'logo_path' => null,
+            'primary_color' => '#667eea',
             'is_active' => true,
+            'owner_id' => $merchant1->id,
         ]);
 
-        // 3. Create Categories
+        $tenant2 = Tenant::create([
+            'slug' => 'fashion-hub',
+            'name' => 'Fashion Hub',
+            'logo_path' => null,
+            'primary_color' => '#f59e0b',
+            'is_active' => true,
+            'owner_id' => $merchant2->id,
+        ]);
+
+        // Create Categories for Tenant 1
         $electronics = Category::create([
-            'tenant_id' => $tenant->id,
+            'tenant_id' => $tenant1->id,
             'name' => 'Electronics',
             'slug' => 'electronics',
-            'is_active' => true,
         ]);
 
-        $wearables = Category::create([
-            'tenant_id' => $tenant->id,
-            'parent_id' => $electronics->id,
-            'name' => 'Wearables',
-            'slug' => 'wearables',
-            'is_active' => true,
+        $accessories = Category::create([
+            'tenant_id' => $tenant1->id,
+            'name' => 'Accessories',
+            'slug' => 'accessories',
         ]);
 
-        // 4. Create Products
-        $watch = Product::create([
-            'tenant_id' => $tenant->id,
-            'category_id' => $wearables->id,
-            'name' => 'Nexus Watch Ultra',
-            'slug' => 'nexus-watch-ultra',
-            'sku' => 'NEX-W-001',
-            'description' => 'The ultimate smartwatch for explorers.',
-            'price' => 5990000,
+        // Create Categories for Tenant 2
+        $clothing = Category::create([
+            'tenant_id' => $tenant2->id,
+            'name' => 'Clothing',
+            'slug' => 'clothing',
+        ]);
+
+        // Create Sample Products for Tenant 1
+        Product::create([
+            'tenant_id' => $tenant1->id,
+            'category_id' => $electronics->id,
+            'name' => 'Wireless Mouse',
+            'slug' => 'wireless-mouse',
+            'sku' => 'WM-001',
+            'description' => 'High-precision wireless mouse with ergonomic design',
+            'price' => 250000,
             'stock' => 50,
+            'images' => null,
             'is_visible' => true,
             'is_featured' => true,
         ]);
 
-        $earbuds = Product::create([
-            'tenant_id' => $tenant->id,
+        Product::create([
+            'tenant_id' => $tenant1->id,
             'category_id' => $electronics->id,
-            'name' => 'Nexus Buds Pro',
-            'slug' => 'nexus-buds-pro',
-            'sku' => 'NEX-B-002',
-            'description' => 'Active Noise Cancellation with 24h battery life.',
-            'price' => 2490000,
-            'stock' => 100,
+            'name' => 'Mechanical Keyboard',
+            'slug' => 'mechanical-keyboard',
+            'sku' => 'MK-001',
+            'description' => 'RGB mechanical keyboard with blue switches',
+            'price' => 750000,
+            'stock' => 30,
+            'images' => null,
             'is_visible' => true,
+            'is_featured' => false,
         ]);
 
-        // 5. Create Customer
-        $customer = Customer::create([
-            'tenant_id' => $tenant->id,
-            'name' => 'Budi Santoso',
-            'email' => 'budi@gmail.com',
-            'phone' => '081234567890',
-            'address' => 'Jl. Sudirman No. 1, Jakarta Pusat',
+        Product::create([
+            'tenant_id' => $tenant1->id,
+            'category_id' => $accessories->id,
+            'name' => 'USB-C Cable',
+            'slug' => 'usbc-cable',
+            'sku' => 'UC-001',
+            'description' => 'Braided USB-C charging cable 2 meters',
+            'price' => 50000,
+            'stock' => 100,
+            'images' => null,
+            'is_visible' => true,
+            'is_featured' => false,
         ]);
 
-        // 6. Create Order
-        $order = Order::create([
-            'tenant_id' => $tenant->id,
-            'customer_id' => $customer->id,
-            'number' => 'ORD-2023-1001',
-            'total_price' => 5990000,
-            'status' => 'processing',
-            'payment_status' => 'paid',
-            'shipping_address' => 'Jl. Sudirman No. 1, Jakarta Pusat',
+        // Create Sample Products for Tenant 2
+        Product::create([
+            'tenant_id' => $tenant2->id,
+            'category_id' => $clothing->id,
+            'name' => 'Cotton T-Shirt',
+            'slug' => 'cotton-tshirt',
+            'sku' => 'TS-001',
+            'description' => 'Premium cotton t-shirt various colors',
+            'price' => 150000,
+            'stock' => 80,
+            'images' => null,
+            'is_visible' => true,
+            'is_featured' => true,
         ]);
 
-        // 7. Create Order Items
-        OrderItem::create([
-            'order_id' => $order->id,
-            'product_id' => $watch->id,
-            'product_name' => $watch->name,
-            'price' => $watch->price,
-            'quantity' => 1,
-            'total' => $watch->price * 1,
+        Product::create([
+            'tenant_id' => $tenant2->id,
+            'category_id' => $clothing->id,
+            'name' => 'Denim Jeans',
+            'slug' => 'denim-jeans',
+            'sku' => 'DJ-001',
+            'description' => 'Classic fit denim jeans',
+            'price' => 350000,
+            'stock' => 40,
+            'images' => null,
+            'is_visible' => true,
+            'is_featured' => true,
         ]);
 
-        // 8. Create Transaction
-        Transaction::create([
-            'tenant_id' => $tenant->id,
-            'order_id' => $order->id,
-            'amount' => 5990000,
-            'payment_method' => 'manual_transfer',
-            'status' => 'approved',
-            'approved_at' => now(),
-            'approved_by' => $merchant->id,
-        ]);
-
-        $this->command->info('Bhandara Seeder Run Successfully!');
-        $this->command->info('User: aditya@bhandara.id / password');
-        $this->command->info('Tenant: Nexus Gear Official (nexus-gear)');
+        $this->command->info('✅ Database seeded successfully!');
+        $this->command->info('Admin: admin@bhandara.id / password');
+        $this->command->info('Merchant 1: john@example.com / password (nexus-gear)');
+        $this->command->info('Merchant 2: jane@example.com / password (fashion-hub)');
     }
 }
