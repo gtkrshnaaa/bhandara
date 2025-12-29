@@ -115,7 +115,7 @@ class AppServiceProvider extends ServiceProvider
                         background-color: #ffffff !important;
                     }
                     input.fi-input {
-                        font-family: 'Outfit', sans-serif !important;
+                        font-family: "Outfit", sans-serif !important;
                         font-weight: 500 !important;
                         color: #1e293b !important;
                         padding-left: 1.25rem !important;
