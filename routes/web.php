@@ -55,7 +55,10 @@ Route::prefix('merchant')->name('merchant.')->middleware('auth')->group(function
     // Scope-Level Routes
     Route::get('/', [MerchantDashboardController::class, 'index'])->name('dashboard');
     
-    // Future: Merchant specific routes will be added here
+    // DOMAIN: Inventory Management
+    Route::prefix('inventory')->name('inventory.')->group(function () {
+        Route::resource('products', \App\Http\Controllers\Merchant\Inventory\ProductController::class);
+    });
     
 });
 
