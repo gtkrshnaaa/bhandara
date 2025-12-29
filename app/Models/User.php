@@ -7,12 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-use Filament\Models\Contracts\HasTenants;
-use Filament\Panel;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-
-class User extends Authenticatable implements HasTenants
+class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -50,8 +45,9 @@ class User extends Authenticatable implements HasTenants
             'password' => 'hashed',
         ];
     }
+
     /**
-     * Get the tenants owned by the user.
+     * Get the tenants (shops) owned by the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -60,12 +56,13 @@ class User extends Authenticatable implements HasTenants
         return $this->hasMany(Tenant::class, 'owner_id');
     }
 
-    public function getTenants(Panel $panel): Collection
-    {
-        return $this->tenants;
-    }
-
-    public function canAccessTenant(Model $tenant): bool
+    /**
+     * Check if user can access a specific tenant.
+     *
+     * @param Tenant $tenant
+     * @return bool
+     */
+    public function canAccessTenant(Tenant $tenant): bool
     {
         return $this->tenants->contains($tenant);
     }
