@@ -12,8 +12,6 @@
     </div>
 
     @php
-        $stats = [
-            'tenants' => \App\Models\Tenant::count(),
         $totalTenants = \App\Models\Tenant::count();
         $totalUsers = \App\Models\User::count();
         $totalProducts = \App\Models\Product::count();
