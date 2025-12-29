@@ -69,14 +69,34 @@
             </div>
 
             <!-- Add to Cart (Coming Soon) -->
-            <div class="flex gap-4">
-                <button 
-                    class="flex-1 bg-brand-600 text-white font-bold py-4 px-8 rounded-xl hover:bg-brand-700 transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                    {{ $product->stock == 0 ? 'disabled' : '' }}
-                >
-                    {{ $product->stock == 0 ? 'Out of Stock' : 'Add to Cart (Coming Soon)' }}
-                </button>
-            </div>
+            <form method="POST" action="{{ route('storefront.cart.add', $tenant->slug) }}">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <div class="flex gap-4 mb-4">
+                    <div class="flex items-center gap-3">
+                        <label for="quantity" class="font-semibold text-slate-700">Quantity:</label>
+                        <input 
+                            type="number" 
+                            id="quantity"
+                            name="quantity" 
+                            value="1" 
+                            min="1" 
+                            max="{{ $product->stock }}"
+                            class="w-24 px-3 py-2 rounded-lg border-2 border-slate-200"
+                            {{ $product->stock == 0 ? 'disabled' : '' }}
+                        >
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button 
+                        type="submit"
+                        class="flex-1 bg-brand-600 text-white font-bold py-4 px-8 rounded-xl hover:bg-brand-700 transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                        {{ $product->stock == 0 ? 'disabled' : '' }}
+                    >
+                        {{ $product->stock == 0 ? 'Out of Stock' : 'Add to Cart' }}
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
