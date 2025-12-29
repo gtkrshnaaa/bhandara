@@ -37,6 +37,10 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Scope-Level Routes
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     
+    // DOMAIN: Tenant Management
+    Route::resource('tenants', \App\Http\Controllers\Admin\TenantController::class);
+    Route::post('tenants/{tenant}/toggle-status', [\App\Http\Controllers\Admin\TenantController::class, 'toggleStatus'])->name('tenants.toggle-status');
+    
     // DOMAIN: Inventory Management
     Route::prefix('inventory')->name('inventory.')->group(function () {
         // Future: Products, Categories resources will be added here
