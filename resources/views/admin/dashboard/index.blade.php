@@ -75,49 +75,85 @@
         </div>
     </div>
 
-    <!-- Recent Tenants -->
-    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
-        <div class="p-6 border-b border-slate-200">
-            <h2 class="text-xl font-bold text-slate-900">Recent Tenants</h2>
+    <!-- Welcome Message -->
+    <div class="bg-gradient-to-r from-slate-900 to-slate-700 rounded-2xl p-8 mb-8 text-white">
+        <h2 class="text-2xl font-bold mb-2">Welcome, {{ Auth::user()->name }}! 👋</h2>
+        <p class="text-slate-300 mb-4">System overview and recent activity across all tenants.</p>
+        <div class="flex gap-4">
+            <a href="{{ route('admin.tenants.create') }}" 
+               class="inline-flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg font-semibold transition">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Create New Tenant
+            </a>
         </div>
-        
-        <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead class="bg-slate-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Shop Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Slug</th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Owner</th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Created</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-200">
-                    @foreach(\App\Models\Tenant::with('owner')->latest()->take(5)->get() as $tenant)
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="px-6 py-4">
-                                <div class="font-semibold text-slate-900">{{ $tenant->name }}</div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <code class="text-sm text-slate-600 bg-slate-100 px-2 py-1 rounded">{{ $tenant->slug }}</code>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-slate-600">
-                                {{ $tenant->owner->name }}
-                            </td>
-                            <td class="px-6 py-4">
-                                @if($tenant->is_active)
-                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                                @else
-                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 text-sm text-slate-500">
-                                {{ $tenant->created_at->diffForHumans() }}
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+    </div>
+
+    <!-- Recent Activity Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Recent Tenants -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-slate-900">Recent Tenants</h3>
+                    <a href="{{ route('admin.tenants.index') }}" class="text-sm font-semibold text-brand-600 hover:text-brand-700">
+                        View All →
+                    </a>
+                </div>
+            </div>
+            <div class="divide-y divide-slate-100">
+                @foreach(\App\Models\Tenant::with('owner')->latest()->take(5)->get() as $tenant)
+                    <div class="p-4 hover:bg-slate-50 transition">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-semibold text-slate-900">{{ $tenant->name }}</span>
+                            @if($tenant->is_active)
+                                <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700 font-semibold">Active</span>
+                            @else
+                                <span class="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700 font-semibold">Inactive</span>
+                            @endif
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <code class="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">{{ $tenant->slug }}</code>
+                            <span class="text-slate-500">{{ $tenant->owner->name }}</span>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Recent Users -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-slate-900">Recent Users</h3>
+                    <a href="{{ route('admin.users.index') }}" class="text-sm font-semibold text-brand-600 hover:text-brand-700">
+                        View All →
+                    </a>
+                </div>
+            </div>
+            <div class="divide-y divide-slate-100">
+                @foreach(\App\Models\User::withCount('tenants')->latest()->take(5)->get() as $user)
+                    <div class="p-4 hover:bg-slate-50 transition">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold">
+                                    {{ substr($user->name, 0, 1) }}
+                                </div>
+                                <div>
+                                    <span class="font-semibold text-slate-900 block">{{ $user->name }}</span>
+                                    <span class="text-xs text-slate-500">{{ $user->email }}</span>
+                                </div>
+                            </div>
+                            @if($user->email === 'admin@bhandara.id')
+                                <span class="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700 font-semibold ">Admin</span>
+                            @else
+                                <span class="text-xs text-slate-500">{{ $user->tenants_count }} shops</span>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 
