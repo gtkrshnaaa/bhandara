@@ -45,4 +45,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    /**
+     * Get the tenants owned by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tenants(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Tenant::class, 'owner_id');
+    }
 }
