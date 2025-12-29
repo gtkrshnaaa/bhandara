@@ -62,8 +62,8 @@
                 <a href="#" class="hover:text-indigo-600 transition-colors">Developers</a>
             </nav>
             <div class="flex gap-4 items-center">
-                <a href="/app/login" class="hidden sm:block px-5 py-2.5 text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors">Sign In</a>
-                <a href="/app/register" class="px-6 py-2.5 text-sm font-bold bg-slate-900 text-white rounded-full hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">Start Free</a>
+                <a href="{{ route('login') }}" class="hidden sm:block px-5 py-2.5 text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors">Sign In</a>
+                <a href="{{ route('register') }}" class="px-6 py-2.5 text-sm font-bold bg-slate-900 text-white rounded-full hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">Start Free</a>
             </div>
         </header>
 
@@ -91,7 +91,7 @@
             <!-- Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl mx-auto px-4 perspective-1000">
                 <!-- Card 1: Super Admin -->
-                <a href="/admin" class="group glass-panel p-8 rounded-[2rem] hover:bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 text-left relative overflow-hidden h-full flex flex-col">
+                <a href="{{ route('admin.dashboard') }}" class="group glass-panel p-8 rounded-[2rem] hover:bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 text-left relative overflow-hidden h-full flex flex-col">
                     <div class="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 transition-opacity">
                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-32 h-32 text-indigo-900 transform group-hover:rotate-12 transition-transform">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
@@ -117,7 +117,7 @@
                 </a>
 
                 <!-- Card 2: Merchant -->
-                <a href="/app" class="group glass-panel p-8 rounded-[2rem] hover:bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10 text-left relative overflow-hidden h-full flex flex-col">
+                <a href="{{ route('merchant.dashboard') }}" class="group glass-panel p-8 rounded-[2rem] hover:bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10 text-left relative overflow-hidden h-full flex flex-col">
                      <div class="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 transition-opacity">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-32 h-32 text-blue-900 transform group-hover:rotate-12 transition-transform">
                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72m-13.5 8.65h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .415.336.75.75.75Z" />
