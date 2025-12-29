@@ -57,13 +57,24 @@
                     </div>
                     <div class="w-px h-8 bg-slate-200 hidden md:block"></div>
                     
+                    <button id="menu-btn" class="md:hidden p-2 -mr-2 text-slate-900 z-50 relative">
+                        <!-- Hamburger -->
+                        <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+                        </svg>
+                        <!-- Close X -->
+                        <svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 hidden">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    
                     <button class="relative group">
                         <div class="p-3 bg-slate-50 rounded-full hover:bg-slate-900 hover:text-white transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                               <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                             </svg>
                         </div>
-                        <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold h-5 w-5 rounded-full flex items-center justify-center border-2 border-white">2</span>
+                        <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold h-5 w-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">2</span>
                     </button>
                 </div>
             </div>
@@ -112,5 +123,37 @@
             </div>
         </div>
     </footer>
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-white transform translate-x-full transition-transform duration-300 md:hidden flex flex-col pt-24 px-6">
+        <a href="#" class="text-2xl font-bold mb-8 text-slate-900">Catalog</a>
+        <a href="#" class="text-2xl font-bold mb-8 text-slate-900">Journal</a>
+        <a href="#" class="text-2xl font-bold mb-8 text-slate-900">Info</a>
+        <div class="mt-auto pb-12">
+            <p class="text-sm text-slate-400">&copy; {{ date('Y') }} {{ $tenant->name }}</p>
+        </div>
+    </div>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const openIcon = document.getElementById('menu-icon-open');
+        const closeIcon = document.getElementById('menu-icon-close');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+                openIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.style.overflow = '';
+                openIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>
