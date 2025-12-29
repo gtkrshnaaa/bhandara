@@ -75,4 +75,16 @@ Route::prefix('u/{shop_slug}')->name('storefront.')->group(function () {
     Route::get('/', [\App\Http\Controllers\Public\StorefrontController::class, 'index'])->name('index');
     Route::get('/category/{category_slug}', [\App\Http\Controllers\Public\StorefrontController::class, 'category'])->name('category');
     Route::get('/product/{product_slug}', [\App\Http\Controllers\Public\StorefrontController::class, 'product'])->name('product');
+    
+    // Cart
+    Route::get('/cart', [\App\Http\Controllers\Public\CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [\App\Http\Controllers\Public\CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/update', [\App\Http\Controllers\Public\CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove/{product_id}', [\App\Http\Controllers\Public\CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/clear', [\App\Http\Controllers\Public\CartController::class, 'clear'])->name('cart.clear');
+    
+    // Checkout
+    Route::get('/checkout', [\App\Http\Controllers\Public\CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout', [\App\Http\Controllers\Public\CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/order/{order}/success', [\App\Http\Controllers\Public\CheckoutController::class, 'success'])->name('checkout.success');
 });
