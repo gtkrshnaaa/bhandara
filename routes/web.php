@@ -64,5 +64,7 @@ Route::prefix('merchant')->name('merchant.')->middleware('auth')->group(function
 
 // GROUP 3: PUBLIC STOREFRONT (Tenant Aware)
 Route::prefix('u/{shop_slug}')->name('storefront.')->group(function () {
-    // Future: Storefront catalog and checkout routes will be added here
+    Route::get('/', [\App\Http\Controllers\Public\StorefrontController::class, 'index'])->name('index');
+    Route::get('/category/{category_slug}', [\App\Http\Controllers\Public\StorefrontController::class, 'category'])->name('category');
+    Route::get('/product/{product_slug}', [\App\Http\Controllers\Public\StorefrontController::class, 'product'])->name('product');
 });
